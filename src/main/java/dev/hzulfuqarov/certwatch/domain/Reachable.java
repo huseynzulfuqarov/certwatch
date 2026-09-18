@@ -1,4 +1,4 @@
-package com.example.certwatch.domain;
+package dev.hzulfuqarov.certwatch.domain;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;

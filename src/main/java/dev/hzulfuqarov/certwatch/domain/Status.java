@@ -1,4 +1,4 @@
-package com.example.certwatch.domain;
+package dev.hzulfuqarov.certwatch.domain;
 
 public sealed interface Status permits Reachable, Unreachable {
 

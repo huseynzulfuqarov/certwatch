@@ -1,4 +1,4 @@
-package com.example.certwatch.domain;
+package dev.hzulfuqarov.certwatch.domain;
 
 import java.util.List;
 import java.util.Locale;

@@ -1,4 +1,4 @@
-package com.example.certwatch;
+package dev.hzulfuqarov.certwatch;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
