@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent directly from repository -->
 	</parent>
 
-	<groupId>com.example</groupId>
+	<groupId>dev.hzulfuqarov</groupId>
 	<artifactId>certwatch</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>certwatch</name>

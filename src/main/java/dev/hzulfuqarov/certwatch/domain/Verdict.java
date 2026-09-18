@@ -1,4 +1,4 @@
-package com.example.certwatch.domain;
+package dev.hzulfuqarov.certwatch.domain;
 
 import java.time.Duration;
 import java.time.Instant;

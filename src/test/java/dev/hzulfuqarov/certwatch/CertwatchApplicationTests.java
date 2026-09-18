@@ -1,4 +1,4 @@
-package com.example.certwatch;
+package dev.hzulfuqarov.certwatch;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
