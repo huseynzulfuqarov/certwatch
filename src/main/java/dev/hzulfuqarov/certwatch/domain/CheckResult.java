@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public record CheckResult(
-        String domain,
+        DomainName domain,
         Instant checkedAt,
         List<String> missingHeaders,
         Status status
