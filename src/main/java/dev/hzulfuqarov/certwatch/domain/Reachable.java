@@ -11,6 +11,8 @@ public record Reachable(Instant expiresAt, Set<SecurityHeader> missingHeaders) i
 
     public Reachable {
         Objects.requireNonNull(expiresAt, "expiresAt");
+        Objects.requireNonNull(missingHeaders, "missingHeaders");
+
         missingHeaders = missingHeaders.isEmpty()
                 ? Set.of()
                 : Collections.unmodifiableSet(EnumSet.copyOf(missingHeaders));
