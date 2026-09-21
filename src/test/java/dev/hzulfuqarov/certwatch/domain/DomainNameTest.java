@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DomainNamesTest {
+class DomainNameTest {
 
     @Test
     void trims_and_lowercases_the_value() {
