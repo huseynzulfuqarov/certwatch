@@ -1,13 +1,16 @@
 package dev.hzulfuqarov.certwatch.domain;
 
-import java.util.List;
+import java.time.Instant;
+import java.util.Objects;
 
 public record CheckResult(
-        String domain,
-        List<String> missingHeaders,
+        DomainName domain,
+        Instant checkedAt,
         Status status
 ) {
     public CheckResult {
-        missingHeaders = List.copyOf(missingHeaders);
+        Objects.requireNonNull(domain, "domain");
+        Objects.requireNonNull(checkedAt, "checkedAt");
+        Objects.requireNonNull(status, "status");
     }
 }

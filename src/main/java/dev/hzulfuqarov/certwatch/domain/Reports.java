@@ -8,11 +8,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public final class Reports {
 
     private Reports() {
     }
+
+    private static final Comparator<CheckResult> BY_EXPIRY = Comparator.comparing(res -> expiryOrMax(res.status()));
 
     public static Map<Verdict, Long> countByVerdict(List<CheckResult> results, Instant now, Duration warnBefore) {
         return results.stream()
@@ -23,11 +26,12 @@ public final class Reports {
                 ));
     }
 
-    public static Map<String, Long> countMissingHeaders(List<CheckResult> results) {
+    public static Map<SecurityHeader, Long> countMissingHeaders(List<CheckResult> results) {
         return results.stream()
-                .flatMap(res -> res.missingHeaders().stream())
+                .flatMap(Reports::missingOf)
                 .collect(Collectors.groupingBy(
                         header -> header,
+                        () -> new EnumMap<>(SecurityHeader.class),
                         Collectors.counting()
                 ));
     }
@@ -35,7 +39,14 @@ public final class Reports {
     public static Optional<CheckResult> soonestExpiring(List<CheckResult> results, Instant now) {
         return results.stream()
                 .filter(res -> res.status() instanceof Reachable r && r.expiresAt().isAfter(now))
-                .min(Comparator.comparing(res -> expiryOrMax(res.status())));
+                .min(BY_EXPIRY);
+    }
+
+    public static List<CheckResult> expired(List<CheckResult> results, Instant now) {
+        return results.stream()
+                .filter(res -> res.status() instanceof Reachable r && !r.expiresAt().isAfter(now))
+                .sorted(BY_EXPIRY)
+                .toList();
     }
 
     // Unreachable results are filtered out before this runs; sorting them last
@@ -45,5 +56,11 @@ public final class Reports {
             case Reachable r -> r.expiresAt();
             case Unreachable u -> Instant.MAX;
         };
+    }
+
+    private static Stream<SecurityHeader> missingOf(CheckResult result) {
+        return result.status() instanceof Reachable reachable
+                ? reachable.missingHeaders().stream()
+                : Stream.empty();
     }
 }

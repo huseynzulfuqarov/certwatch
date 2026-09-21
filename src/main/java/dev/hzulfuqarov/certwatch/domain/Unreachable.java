@@ -1,5 +1,10 @@
 package dev.hzulfuqarov.certwatch.domain;
 
-public record Unreachable(String reason) implements Status {
+import java.util.Objects;
 
+public record Unreachable(FailureKind kind, String details) implements Status {
+
+    public Unreachable{
+        Objects.requireNonNull(kind, "kind");
+    }
 }

@@ -1,11 +1,24 @@
 package dev.hzulfuqarov.certwatch.domain;
 
+import java.time.Duration;
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.Objects;
+import java.util.Set;
 
-public record Reachable(Instant expiresAt) implements Status {
+public record Reachable(Instant expiresAt, Set<SecurityHeader> missingHeaders) implements Status {
 
-    public long daysLeft(Instant now) {
-        return ChronoUnit.DAYS.between(now, expiresAt);
+    public Reachable {
+        Objects.requireNonNull(expiresAt, "expiresAt");
+        Objects.requireNonNull(missingHeaders, "missingHeaders");
+
+        missingHeaders = missingHeaders.isEmpty()
+                ? Set.of()
+                : Collections.unmodifiableSet(EnumSet.copyOf(missingHeaders));
+    }
+
+    public Duration timeLeft(Instant now) {
+        return Duration.between(now, expiresAt);
     }
 }
