@@ -31,6 +31,7 @@ public final class Reports {
                 .flatMap(Reports::missingOf)
                 .collect(Collectors.groupingBy(
                         header -> header,
+                        () -> new EnumMap<>(SecurityHeader.class),
                         Collectors.counting()
                 ));
     }
